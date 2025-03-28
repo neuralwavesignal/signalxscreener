@@ -1,0 +1,21 @@
+{
+    "builds": [{
+        "src": "stockscreener/wsgi.py",
+        "use": "@vercel/python",
+        "config": { 
+            "maxLambdaSize": "15mb",
+            "runtime":"python3.9",
+            "output": "stockscreener"
+        }
+    }],
+    "routes": [
+        {
+            "src": "/static/(.*)",
+            "dest": "/static/$1"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "stockscreener/wsgi.py"
+        }
+    ]
+}
