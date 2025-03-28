@@ -112,6 +112,8 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+INSTALLED_APPS += ['whitenoise.runserver_nostatic']
 # URL prefix for static files
 STATIC_URL = '/static/'
 
