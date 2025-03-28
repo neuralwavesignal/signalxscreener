@@ -1,16 +1,22 @@
 {
-    "builds": [{
-        "src": "stockscreener/wsgi.py",
-        "use": "@vercel/python",
-        "config": { 
-            "maxLambdaSize": "15mb",
-            "runtime":"python3.9",
-            "output": "stockscreener"
+    "builds": [
+        {
+            "src": "stockscreener/wsgi.py",
+            "use": "@vercel/python",
+            "config": {
+                "maxLambdaSize": "15mb",
+                "runtime": "python3.9",
+                "output": "stockscreener"
+            }
+        },
+        {
+            "src": "build_files.sh",
+            "use": "@vercel/static"
         }
-    }],
+    ],
     "routes": [
         {
-            "src": "/static/(.*)",
+            "src": "/staticfiles/(.*)",
             "dest": "/staticfiles/$1"
         },
         {
