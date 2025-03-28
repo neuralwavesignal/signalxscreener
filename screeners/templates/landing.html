@@ -1,0 +1,633 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SignalX - India’s Best Stock Screeners</title>
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <!-- Feather Icons CDN -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    <!-- SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        /* Custom styles for carousel and animations */
+        .carousel {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+        }
+
+        .carousel-item {
+            flex: 0 0 100%;
+            scroll-snap-align: start;
+        }
+
+        @media (min-width: 640px) {
+            .carousel-item {
+                width: 50%;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .carousel-item {
+                width: 33.333%;
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .animate-slide-up {
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            0% {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-900 text-gray-100 font-sans">
+    <!-- Navbar -->
+<nav class="bg-gray-800 shadow-lg fixed w-full z-10">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+            <i data-feather="activity" class="w-6 h-6 text-blue-400"></i>
+            <span class="text-2xl font-bold">SignalX</span>
+        </div>
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex space-x-6 items-center">
+            <a href="#home" class="hover:text-blue-400 transition">Home</a>
+            <a href="#features" class="hover:text-blue-400 transition">Features</a>
+            <a href="#pnl" class="hover:text-blue-400 transition">PnL</a>
+            <a href="#multibagger" class="hover:text-blue-400 transition">Multibagger</a>
+            <a href="#testimonials" class="hover:text-blue-400 transition">Testimonials</a>
+            <a href="#pricing" class="hover:text-blue-400 transition">Pricing</a>
+            <button onclick="window.location.href='/login'" 
+                class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded transition transform hover:scale-105">
+                Login
+            </button>
+        </div>
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden">
+            <button id="mobile-menu-btn" class="text-gray-300 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-gray-800">
+        <a href="#home" class="block px-6 py-2 hover:text-blue-400 transition">Home</a>
+        <a href="#features" class="block px-6 py-2 hover:text-blue-400 transition">Features</a>
+        <a href="#pnl" class="block px-6 py-2 hover:text-blue-400 transition">PnL</a>
+        <a href="#multibagger" class="block px-6 py-2 hover:text-blue-400 transition">Multibagger</a>
+        <a href="#testimonials" class="block px-6 py-2 hover:text-blue-400 transition">Testimonials</a>
+        <a href="#pricing" class="block px-6 py-2 hover:text-blue-400 transition">Pricing</a>
+        <button onclick="window.location.href='/login'" 
+                class="w-full text-left bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded transition transform hover:scale-105">
+                Login
+        </button>
+    </div>
+</nav>
+
+<script>
+    // Toggle mobile menu
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+</script>
+
+
+    <!-- Hero Section -->
+    <section id="home" class="bg-gray-800 pt-24 pb-20">
+        <div class="container mx-auto px-6 text-center animate-fade-in">
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
+                Discover Winning Stocks with <span class="text-blue-400">SignalX Screener</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
+                India’s most advanced stock screeners: Intraday, Short Term, Long Term, and Multibagger – designed for
+                higher gains with 95% accuracy.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-6">
+                <button id="ctaPayment"
+                    class="bg-blue-600 hover:bg-blue-700 py-4 px-10 rounded-full text-xl font-semibold transition transform hover:scale-105 hover:shadow-xl">
+                    Buy Now
+                </button>
+                <button id="ctaFreeTrial"
+                    class="bg-green-600 hover:bg-green-700 py-4 px-10 rounded-full text-xl font-semibold transition transform hover:scale-105 hover:shadow-xl">
+                    Get 1-Day Free Trial
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="container mx-auto px-6 py-16">
+        <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 animate-slide-up">Why SignalX Stands Out</h2>
+        <div class="grid md:grid-cols-4 gap-8">
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-2xl transition transform hover:scale-105">
+                <i data-feather="clock" class="w-10 h-10 text-blue-400 mb-4"></i>
+                <h3 class="text-xl font-semibold mb-2">Real-Time Updates</h3>
+                <p class="text-gray-300">Instant market data for quick decisions.</p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-2xl transition transform hover:scale-105">
+                <i data-feather="cpu" class="w-10 h-10 text-green-400 mb-4"></i>
+                <h3 class="text-xl font-semibold mb-2">Smart Algorithms</h3>
+                <p class="text-gray-300">Find high-potential stocks effortlessly.</p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-2xl transition transform hover:scale-105">
+                <i data-feather="smile" class="w-10 h-10 text-purple-400 mb-4"></i>
+                <h3 class="text-xl font-semibold mb-2">Easy to Use</h3>
+                <p class="text-gray-300">Intuitive platform for all traders.</p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-2xl transition transform hover:scale-105">
+                <i data-feather="sliders" class="w-10 h-10 text-yellow-400 mb-4"></i>
+                <h3 class="text-xl font-semibold mb-2">Custom Filters</h3>
+                <p class="text-gray-300">Tailor screeners to your strategy.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Stock Screener Section -->
+    <section id="interactive-screener" class="container mx-auto px-6 py-16">
+        <div class="flex flex-col md:flex-row gap-8">
+            <!-- Left Side: Stock List -->
+            <div class="md:w-1/3">
+                <h2 class="text-4xl font-bold mb-6">Multibagger Stocks Detected by Our Screener</h2>
+                <ul class="space-y-4">
+                    <li data-stock="stock1"
+                        class="stock-item cursor-pointer p-4 bg-gray-800 rounded hover:bg-gray-700 transition transform hover:scale-105">
+                        The Pheonix Mills
+                    </li>
+                    <li data-stock="stock2"
+                        class="stock-item cursor-pointer p-4 bg-gray-800 rounded hover:bg-gray-700 transition transform hover:scale-105">
+                        Anand Rathi Wealth
+                    </li>
+                    <li data-stock="stock3"
+                        class="stock-item cursor-pointer p-4 bg-gray-800 rounded hover:bg-gray-700 transition transform hover:scale-105">
+                        Patanjali foods
+                    </li>
+                    <li data-stock="stock4"
+                        class="stock-item cursor-pointer p-4 bg-gray-800 rounded hover:bg-gray-700 transition transform hover:scale-105">
+                        Solar Industries
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Right Side: Stock Display -->
+            <div id="stock-display"
+                class="md:w-2/3 flex flex-col items-center bg-gray-800 p-6 rounded-xl shadow-lg transition transform hover:scale-105">
+                <img id="stock-image" src="{% static 'images/stock1.png' %}" alt="Stock Chart"
+                    class="w-full h-64 object-cover rounded mb-4">
+                <h3 id="stock-name" class="text-3xl font-semibold mb-2">The Pheonix Mills</h3>
+                <div id="return-container" class="flex flex-col items-center">
+                    <!-- Returns text styled bold and interactive -->
+                    <p id="stock-desc" class="text-gray-300 mt-2 text-xl">
+                        <span class="font-extrabold text-green-400 text-4xl animate-pulse">150%</span> return in just 3
+                        months!
+                    </p>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="mt-6 flex flex-col sm:flex-row justify-center gap-6">
+            <button onclick="window.location.href='https://cosmofeed.com/vig/67e673bbf9039800139abcb2'" id="ctaPayment"
+                class="bg-blue-600 hover:bg-blue-700 py-4 px-10 rounded-full text-xl font-semibold transition transform hover:scale-105 hover:shadow-xl">
+                Buy Now
+            </button>
+            <button id="ctaFreeTrial"
+                class="ctaPayment bg-green-600 hover:bg-green-700 py-4 px-10 rounded-full text-xl font-semibold transition transform hover:scale-105 hover:shadow-xl">
+                Get 1-Day Free Trial
+            </button>
+        </div>
+    </section>
+
+    <script>
+        // Data mapping for each stock
+        const stockData = {
+            stock1: {
+                name: 'The Pheonix Mills',
+                image: '{% static "images/stock1.png" %}',
+                desc: '<span class="font-extrabold text-green-400 text-4xl animate-pulse">150%</span> return in just 3 months!'
+            },
+            stock2: {
+                name: 'Anand Rathi Wealth',
+                image: '{% static "images/stock2.png" %}',
+                desc: '<span class="font-extrabold text-green-400 text-4xl animate-pulse">450%</span> surge in 1 Year!'
+            },
+            stock3: {
+                name: 'Patanjali Foods',
+                image: '{% static "images/stock3.png" %}',
+                desc: '<span class="font-extrabold text-green-400 text-4xl animate-pulse">110%</span> growth over 10 months!'
+            },
+            stock4: {
+                name: 'Solar Industries',
+                image: '{% static "images/stock4.png" %}',
+                desc: '<span class="font-extrabold text-green-400 text-4xl animate-pulse">50%</span> return in just 3 months!'
+            }
+        };
+
+        // Add click event listeners to each stock item
+        document.querySelectorAll('.stock-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const stockKey = item.getAttribute('data-stock');
+                const data = stockData[stockKey];
+
+                // Update the display on the right
+                document.getElementById('stock-image').src = data.image;
+                document.getElementById('stock-name').textContent = data.name;
+                document.getElementById('stock-desc').innerHTML = data.desc;
+
+                // Add an animation effect for the display container
+                const displayElem = document.getElementById('stock-display');
+                displayElem.classList.remove('animate-fade-in');
+                void displayElem.offsetWidth; // trigger reflow
+                displayElem.classList.add('animate-fade-in');
+            });
+        });
+    </script>
+
+    <!-- Profit and Loss Section -->
+    <section id="pnl" class="bg-gray-800 py-16">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 animate-slide-up">See Our Proven Results</h2>
+            <div class="grid sm:grid-cols-3 gap-8">
+                <a href="https://console.zerodha.com/verified/8bda5085" target="_blank"
+                    class="bg-gray-700 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition transform hover:scale-105">
+                    <img src="{% static 'images/verified1.jpg' %}" alt="PnL 1" class="w-full h-48 object-cover">
+                    <div class="p-4 text-center">
+                        <h3 class="text-lg font-semibold">PnL Statement #1</h3>
+                    </div>
+                </a>
+                <a href="https://console.zerodha.com/verified/27180ae7" target="_blank"
+                    class="bg-gray-700 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition transform hover:scale-105">
+                    <img src="{% static 'images/verified2.jpg' %}" alt="PnL 2" class="w-full h-48 object-cover">
+                    <div class="p-4 text-center">
+                        <h3 class="text-lg font-semibold">PnL Statement #2</h3>
+                    </div>
+                </a>
+                <a href="https://console.zerodha.com/verified/ee5425f4" target="_blank"
+                    class="bg-gray-700 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition transform hover:scale-105">
+                    <img src="{% static 'images/verified3.jpg' %}" alt="PnL 3" class="w-full h-48 object-cover">
+                    <div class="p-4 text-center">
+                        <h3 class="text-lg font-semibold">PnL Statement #3</h3>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Accuracy Section -->
+    <section id="accuracy" class="bg-gradient-to-r from-blue-600 to-blue-800 py-16 text-center">
+        <div class="container mx-auto px-6 animate-slide-up">
+            <h2 class="text-5xl md:text-7xl font-extrabold text-white mb-6">95% Accuracy Rate</h2>
+            <p class="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto">
+                Our screeners deliver unmatched precision, helping you pick winning stocks with confidence. Trusted by
+                thousands of Indian traders for consistent results.
+            </p>
+        </div>
+    </section>
+
+    <!-- NEW: Lifetime Access Section -->
+    <section id="lifetime" class="container mx-auto px-6 py-16">
+        <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 animate-slide-up">Pay Once & Use Forever</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Lifetime Access Card -->
+            <div class="bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-2xl transition transform hover:scale-105">
+                <i data-feather="infinity" class="w-10 h-10 text-blue-400 mb-4"></i>
+                <h3 class="text-2xl font-semibold mb-2">Lifetime Access</h3>
+                <p class="text-gray-300">Pay once and enjoy unlimited access to all features without any recurring
+                    costs.</p>
+            </div>
+            <!-- Instant Activation Card -->
+            <div class="bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-2xl transition transform hover:scale-105">
+                <i data-feather="zap" class="w-10 h-10 text-green-400 mb-4"></i>
+                <h3 class="text-2xl font-semibold mb-2">Instant Activation</h3>
+                <p class="text-gray-300">Get started immediately after your one-time payment—no waiting period required.
+                </p>
+            </div>
+            <!-- Free Updates Card -->
+            <div class="bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-2xl transition transform hover:scale-105">
+                <i data-feather="refresh-ccw" class="w-10 h-10 text-purple-400 mb-4"></i>
+                <h3 class="text-2xl font-semibold mb-2">Free Updates</h3>
+                <p class="text-gray-300">Stay up to date with the latest features and improvements at no extra cost.</p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Multibagger Section -->
+    <section id="multibagger" class="container mx-auto px-6 py-16">
+        <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 animate-slide-up">Skyrocketing Gains with
+            Multibagger Screener</h2>
+        <div class="flex flex-col md:flex-row items-center gap-12">
+            <div class="md:w-1/2">
+                <img src="{% static 'images/multibagger.png' %}" alt="Multibagger Chart"
+                    class="w-full rounded-xl shadow-lg">
+            </div>
+            <div class="md:w-1/2">
+                <p class="text-gray-300 text-lg mb-6">
+                    Our Multibagger Screener is your key to identifying stocks with explosive growth potential. Imagine
+                    turning small investments into massive returns!
+                </p>
+                <ul class="space-y-4 text-gray-300">
+                    <li class="flex items-center"><i data-feather="check-circle"
+                            class="w-6 h-6 text-green-400 mr-2"></i> Spot multibaggers before the crowd.</li>
+                    <li class="flex items-center"><i data-feather="check-circle"
+                            class="w-6 h-6 text-green-400 mr-2"></i> Achieve higher gains with data-driven picks.</li>
+                    <li class="flex items-center"><i data-feather="check-circle"
+                            class="w-6 h-6 text-green-400 mr-2"></i> Stay ahead of market trends.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="mt-6 flex flex-col sm:flex-row justify-center gap-6">
+            <button onclick="window.location.href='https://cosmofeed.com/vig/67e673bbf9039800139abcb2'" id="ctaPayment"
+                class="bg-blue-600 hover:bg-blue-700 py-4 px-10 rounded-full text-xl font-semibold transition transform hover:scale-105 hover:shadow-xl">
+                Buy Now
+            </button>
+            <button id="ctaFreeTrial"
+                class="ctaPayment bg-green-600 hover:bg-green-700 py-4 px-10 rounded-full text-xl font-semibold transition transform hover:scale-105 hover:shadow-xl">
+                Get 1-Day Free Trial
+            </button>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="bg-gray-800 py-16">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 animate-slide-up">Hear from Our Traders</h2>
+            <div class="carousel relative flex overflow-x-hidden">
+                <!-- Carousel items -->
+                <div class="carousel-item p-4 flex-shrink-0 w-full md:w-1/3">
+                    <div class="bg-gray-700 p-6 rounded-xl shadow-lg">
+                        <p class="text-gray-300 mb-4">"SignalX’s Multibagger Screener doubled my portfolio!"</p>
+                        <div class="flex items-center">
+                            <img src="{% static 'images/p1.jpeg' %}" alt="Rahul" class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <h4 class="font-semibold">Rahul Sharma</h4>
+                                <p class="text-gray-400">Mumbai</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item p-4 flex-shrink-0 w-full md:w-1/3">
+                    <div class="bg-gray-700 p-6 rounded-xl shadow-lg">
+                        <p class="text-gray-300 mb-4">"The accuracy is unreal. Best investment ever."</p>
+                        <div class="flex items-center">
+                            <img src="{% static 'images/p2.jpeg' %}" alt="Priya" class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <h4 class="font-semibold">Raghav Patel</h4>
+                                <p class="text-gray-400">Ahmedabad</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item p-4 flex-shrink-0 w-full md:w-1/3">
+                    <div class="bg-gray-700 p-6 rounded-xl shadow-lg">
+                        <p class="text-gray-300 mb-4">"Super easy to use, even for beginners."</p>
+                        <div class="flex items-center">
+                            <img src="{% static 'images/p3.jpeg' %}" alt="Amit" class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <h4 class="font-semibold">Amit Kumar</h4>
+                                <p class="text-gray-400">Delhi</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add remaining testimonials similarly -->
+                <!-- Navigation Buttons -->
+                <button id="prevBtn"
+                    class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-600 p-2 rounded-full hover:bg-gray-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                <button id="nextBtn"
+                    class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-600 p-2 rounded-full hover:bg-gray-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+
+    </section>
+
+    <!-- Single All-in-One Pricing Section -->
+    <section id="pricing" class="container mx-auto px-6 py-16">
+        <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 animate-slide-up">All-in-One Plan</h2>
+        <div class="flex justify-center">
+            <div
+                class="bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-2xl transition transform hover:scale-105 max-w-md w-full">
+                <h3 class="text-2xl font-semibold mb-4 text-center">Everything You Need + TradingView Premium</h3>
+                <p class="text-gray-300 mb-6 text-center">
+                    Get Intraday, Short Term, Long Term & Multibagger Screeners along with TradingView Premium Access
+                    and more—all in one plan!
+                </p>
+                <div class="text-5xl font-bold mb-6 text-center">₹2584</div>
+                <button onclick="window.location.href='https://cosmofeed.com/vig/67e673bbf9039800139abcb2'"
+                    class="bg-blue-600 hover:bg-blue-700 py-3 px-8 rounded-full text-lg font-semibold transition transform hover:scale-105 w-full">
+                    Buy Now
+                </button>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- WhatsApp Modal -->
+    <div id="whatsAppModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden z-50">
+        <div class="bg-gray-800 p-8 rounded-xl shadow-2xl w-11/12 max-w-md animate-fade-in">
+            <h3 class="text-2xl font-bold text-center mb-4">Try SignalX Screener Free for <br> 1 Day</h3>
+            <p class="text-gray-300 text-center mb-6">Enter your WhatsApp number to get started.</p>
+            <form id="whatsAppForm" class="space-y-6">
+                <div class="flex">
+                    <span
+                        class="inline-flex items-center px-4 bg-gray-700 border border-r-0 border-gray-600 rounded-l text-gray-300">+91</span>
+                    <input type="text" id="whatsAppNumber" placeholder="10-digit number"
+                        class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-r focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-100"
+                        required pattern="\d{10}">
+                </div>
+                <button type="submit"
+                    class="w-full bg-green-600 hover:bg-green-700 py-3 rounded-full text-lg font-semibold transition transform hover:scale-105">
+                    Claim Free Trial
+                </button>
+            </form>
+            <button id="closeModal"
+                class="mt-4 w-full border border-gray-600 text-gray-300 py-2 rounded-full hover:bg-gray-700 transition">Close</button>
+        </div>
+    </div>
+
+   <!-- Footer -->
+<footer class="bg-gray-800 py-6">
+    <div class="container mx-auto px-6 text-center text-gray-500">
+        <p>© 2025 SignalX. All Rights Reserved.</p>
+        <p class="mt-2">
+            Contact us on WhatsApp: 
+            <a href="https://wa.me/919643536701" target="_blank" class="text-blue-400 hover:text-blue-300">
+                +919643536701
+            </a>
+        </p>
+    </div>
+</footer>
+
+
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+
+        // WhatsApp Modal Logic
+        const modal = document.getElementById('whatsAppModal');
+        const openModalBtn = document.getElementById('ctaFreeTrial');
+        const openModalBtns = document.getElementsByClassName('ctaPayment');
+        const closeModalBtn = document.getElementById('closeModal');
+        const form = document.getElementById('whatsAppForm');
+
+        // Show modal on page load
+        window.addEventListener('load', () => {
+            modal.classList.remove('hidden');
+        });
+
+        // Open modal on CTA click
+        openModalBtn.addEventListener('click', () => {
+            modal.classList.remove('hidden');
+        });
+
+        for (i of openModalBtns) {
+            i.addEventListener('click', () => {
+                modal.classList.remove('hidden');
+            });
+        }
+
+
+        // Close modal
+        closeModalBtn.addEventListener('click', () => {
+            modal.classList.add('hidden');
+        });
+
+        // Form submission with SweetAlert2 and API call
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const number = document.getElementById('whatsAppNumber').value;
+            if (number.length === 10 && /^\d+$/.test(number)) {
+                fetch('/api/whatsapp-leads/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ number: number })
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json().then(errData => {
+                                throw new Error(errData.error || 'Something went wrong');
+                            });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Your 1-day free trial is activated. Login credentials will be sent to your WhatsApp soon.',
+                            icon: 'success',
+                            confirmButtonText: 'OK',
+                            customClass: { confirmButton: 'bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full' }
+                        }).then(() => {
+                            modal.classList.add('hidden');
+                            form.reset();
+                        });
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            title: 'Error',
+                            text: error.message,
+                            icon: 'error',
+                            confirmButtonText: 'Try Again',
+                            customClass: { confirmButton: 'bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-full' }
+                        });
+                    });
+            } else {
+                Swal.fire({
+                    title: 'Oops!',
+                    text: 'Please enter a valid 10-digit Indian WhatsApp number.',
+                    icon: 'error',
+                    confirmButtonText: 'Try Again',
+                    customClass: { confirmButton: 'bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-full' }
+                });
+            }
+        });
+        // Redirect to payment page
+        document.getElementById('ctaPayment').addEventListener('click', () => {
+            window.location.href = 'https://cosmofeed.com/vig/67e673bbf9039800139abcb2';
+        });
+    </script>
+
+    <!-- JavaScript for Carousel Functionality -->
+    <script>
+        const carousel = document.querySelector('.carousel');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let scrollAmount = 0;
+        const itemWidth = carousel.querySelector('.carousel-item').clientWidth;
+
+        nextBtn.addEventListener('click', () => {
+            if (scrollAmount < carousel.scrollWidth - carousel.clientWidth) {
+                scrollAmount += itemWidth;
+                carousel.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (scrollAmount > 0) {
+                scrollAmount -= itemWidth;
+                carousel.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+            }
+        });
+
+        // Optional: Auto-slide every 5 seconds
+        setInterval(() => {
+            if (scrollAmount < carousel.scrollWidth - carousel.clientWidth) {
+                scrollAmount += itemWidth;
+            } else {
+                scrollAmount = 0;
+            }
+            carousel.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+        }, 5000);
+    </script>
+</body>
+
+</html>

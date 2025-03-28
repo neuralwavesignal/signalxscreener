@@ -1,0 +1,146 @@
+<!-- screeners/templates/dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Screener Dashboard</title>
+  <!-- Tailwind CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <!-- Animate.css CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <style>
+    /* Additional custom styles can be added here */
+  </style>
+</head>
+<body class="bg-gray-900 text-gray-100">
+  <!-- Navbar -->
+  <nav class="bg-gray-800 text-gray-100 py-4 px-6 flex flex-col sm:flex-row justify-between items-center shadow-md">
+    <div class="mb-2 sm:mb-0">
+      <h1 class="text-2xl font-bold">Screener Dashboard</h1>
+    </div>
+    <div>
+      <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="bg-red-600 hover:bg-red-700 text-gray-100 font-semibold py-2 px-4 rounded transition duration-300 ease-in-out">
+          Logout
+        </button>
+      </form>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container mx-auto py-8 px-4">
+    <div class="mb-8 overflow-x-auto">
+      <ul class="flex flex-wrap justify-center sm:justify-start space-x-0 sm:space-x-4 space-y-2 sm:space-y-0">
+        <li>
+          <button id="btn-intraday" class="screener-tab bg-blue-600 hover:bg-blue-700 text-gray-100 font-semibold py-2 px-4 rounded transition-transform transform hover:scale-105 m-1" data-type="intraday">
+            Intraday Screener
+          </button>
+        </li>
+        <li>
+          <button class="screener-tab bg-blue-600 hover:bg-blue-700 text-gray-100 font-semibold py-2 px-4 rounded transition-transform transform hover:scale-105 m-1" data-type="short_term">
+            Short Term
+          </button>
+        </li>
+        <li>
+          <button class="screener-tab bg-blue-600 hover:bg-blue-700 text-gray-100 font-semibold py-2 px-4 rounded transition-transform transform hover:scale-105 m-1" data-type="long_term">
+            Long Term
+          </button>
+        </li>
+        <li>
+          <button class="screener-tab bg-blue-600 hover:bg-blue-700 text-gray-100 font-semibold py-2 px-4 rounded transition-transform transform hover:scale-105 m-1" data-type="multibagger">
+            Multi Bagger
+          </button>
+        </li>
+        <li>
+          <button class="screener-tab bg-blue-600 hover:bg-blue-700 text-gray-100 font-semibold py-2 px-4 rounded transition-transform transform hover:scale-105 m-1" data-type="intraday_multibagger">
+            Intraday Multi Bagger
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Detail Message -->
+    <div id="detail-message" class="mb-4 text-center text-lg text-gray-300"></div>
+
+    <!-- Data Container -->
+    <div id="screener-data" class="bg-gray-800 shadow-md rounded p-4 animate__animated">
+      <p class="text-center text-gray-400">Loading data...</p>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const buttons = document.querySelectorAll('.screener-tab');
+      const dataContainer = document.getElementById('screener-data');
+      const detailMessageDiv = document.getElementById('detail-message');
+
+      // Define custom detail messages for each screener type
+      const detailMessages = {
+        intraday: "Intraday stocks for quick trades within the day.",
+        short_term: "Short term stocks: Hold for a few days up to a couple of weeks.",
+        long_term: "Long term stocks: You can buy these stocks and hold for 6 months to 1 year.",
+        multibagger: "Multi Bagger stocks: Potential for significant returns over time.",
+        intraday_multibagger: "Intraday Multi Bagger stocks: High potential moves within the day."
+      };
+
+      function loadScreenerData(type) {
+        // Set the detail message
+        detailMessageDiv.textContent = detailMessages[type] || "";
+        fetch(`/api/screener/?type=${type}`)
+          .then(response => response.json())
+          .then(data => {
+            // Apply fadeOut effect before updating content
+            dataContainer.classList.remove('animate__fadeIn');
+            dataContainer.classList.add('animate__fadeOut');
+            setTimeout(() => {
+              dataContainer.innerHTML = '';
+              if (data.length === 0) {
+                dataContainer.innerHTML = '<p class="text-center text-gray-400">No data available for this screener.</p>';
+              } else {
+                data.forEach(stock => {
+                  const stockDiv = document.createElement('div');
+                  stockDiv.classList.add('p-4', 'border-b', 'border-gray-700', 'animate__animated', 'animate__fadeIn');
+                  stockDiv.innerHTML = `
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+                      <div class="mb-2 sm:mb-0">
+                        <strong>${stock.stock_symbol}</strong> - ${stock.stock_name}
+                      </div>
+                      <div class="text-sm text-gray-400">
+                        ${stock.screener_type}
+                      </div>
+                    </div>
+                    <div class="text-xs text-gray-500">
+                      CMP Price: ${stock.cmp_price !== null ? stock.cmp_price : 'N/A'}<br>
+                      Last updated: ${new Date(stock.last_updated).toLocaleString()}
+                    </div>
+                  `;
+                  dataContainer.appendChild(stockDiv);
+                });
+              }
+              // Remove fadeOut and add fadeIn for the updated container
+              dataContainer.classList.remove('animate__fadeOut');
+              dataContainer.classList.add('animate__fadeIn');
+            }, 300);
+          })
+          .catch(error => {
+            dataContainer.innerHTML = '<p class="text-center text-red-500">Failed to load data. Please try again later.</p>';
+            console.error('Error fetching screener data:', error);
+          });
+      }
+
+      // Bind click event to each screener button
+      buttons.forEach(button => {
+        button.addEventListener('click', function() {
+          const type = this.getAttribute('data-type');
+          loadScreenerData(type);
+        });
+      });
+
+      // Load intraday screener data by default on page load
+      document.getElementById('btn-intraday').click();
+    });
+  </script>
+</body>
+</html>
