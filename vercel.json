@@ -17,5 +17,6 @@
             "src": "/(.*)",
             "dest": "stockscreener/wsgi.py"
         }
-    ]
+    ],
+    "outputDirectory": "staticfiles"
 }
