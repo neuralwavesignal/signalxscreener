@@ -7,11 +7,11 @@ from .models import Stock
 def run_scraper_function():
     # Define the links for each screener type
     screener_links = {
-        'intraday': 'https://www.screener.in/screens/2581557/signalx-screener/',
-        'short_term': 'https://www.screener.in/screens/2581767/signalx-growth-stocks-screener/',
-        'long_term': 'https://www.screener.in/screens/2582036/signalx-momentum/',
-        'multibagger': 'https://www.screener.in/screens/2582036/signalx-momentum/',
-        'intraday_multibagger': 'https://www.screener.in/screens/2582036/signalx-momentum/',
+        'intraday': 'https://www.screener.in/screens/2631908/intraday/',
+        'short_term': 'https://www.screener.in/screens/2631953/short_term/',
+        'long_term': 'https://www.screener.in/screens/2631963/long_term/',
+        'multibagger': 'https://www.screener.in/screens/2631891/multi_bagger/',
+        'intraday_multibagger': 'https://www.screener.in/screens/2631937/intraday_multibagger/',
     }
 
     for screener, url in screener_links.items():
@@ -31,7 +31,7 @@ def run_scraper_function():
                     cmp_value = None
                     try:
                         cmp_value = float(cmp_text.replace(',', '').replace('$', ''))
-                        print(cmp_value)
+                   
                     except ValueError:
                         cmp_value = None
 

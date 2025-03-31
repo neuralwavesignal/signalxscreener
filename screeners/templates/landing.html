@@ -72,59 +72,59 @@
 
 <body class="bg-gray-900 text-gray-100 font-sans">
     <!-- Navbar -->
-<nav class="bg-gray-800 shadow-lg fixed w-full z-10">
-    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-        <div class="flex items-center space-x-2">
-            <i data-feather="activity" class="w-6 h-6 text-blue-400"></i>
-            <span class="text-2xl font-bold">SignalX</span>
+    <nav class="bg-gray-800 shadow-lg fixed w-full z-10">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i data-feather="activity" class="w-6 h-6 text-blue-400"></i>
+                <span class="text-2xl font-bold">SignalX</span>
+            </div>
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="#home" class="hover:text-blue-400 transition">Home</a>
+                <a href="#features" class="hover:text-blue-400 transition">Features</a>
+                <a href="#pnl" class="hover:text-blue-400 transition">PnL</a>
+                <a href="#multibagger" class="hover:text-blue-400 transition">Multibagger</a>
+                <a href="#testimonials" class="hover:text-blue-400 transition">Testimonials</a>
+                <a href="#pricing" class="hover:text-blue-400 transition">Pricing</a>
+                <button onclick="window.location.href='/login'"
+                    class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded transition transform hover:scale-105">
+                    Login
+                </button>
+            </div>
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden">
+                <button id="mobile-menu-btn" class="text-gray-300 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
         </div>
-        <!-- Desktop Menu -->
-        <div class="hidden md:flex space-x-6 items-center">
-            <a href="#home" class="hover:text-blue-400 transition">Home</a>
-            <a href="#features" class="hover:text-blue-400 transition">Features</a>
-            <a href="#pnl" class="hover:text-blue-400 transition">PnL</a>
-            <a href="#multibagger" class="hover:text-blue-400 transition">Multibagger</a>
-            <a href="#testimonials" class="hover:text-blue-400 transition">Testimonials</a>
-            <a href="#pricing" class="hover:text-blue-400 transition">Pricing</a>
-            <button onclick="window.location.href='/login'" 
-                class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded transition transform hover:scale-105">
-                Login
-            </button>
-        </div>
-        <!-- Mobile Menu Button -->
-        <div class="md:hidden">
-            <button id="mobile-menu-btn" class="text-gray-300 focus:outline-none">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
-        </div>
-    </div>
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden md:hidden bg-gray-800">
-        <a href="#home" class="block px-6 py-2 hover:text-blue-400 transition">Home</a>
-        <a href="#features" class="block px-6 py-2 hover:text-blue-400 transition">Features</a>
-        <a href="#pnl" class="block px-6 py-2 hover:text-blue-400 transition">PnL</a>
-        <a href="#multibagger" class="block px-6 py-2 hover:text-blue-400 transition">Multibagger</a>
-        <a href="#testimonials" class="block px-6 py-2 hover:text-blue-400 transition">Testimonials</a>
-        <a href="#pricing" class="block px-6 py-2 hover:text-blue-400 transition">Pricing</a>
-        <button onclick="window.location.href='/login'" 
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-800">
+            <a href="#home" class="block px-6 py-2 hover:text-blue-400 transition">Home</a>
+            <a href="#features" class="block px-6 py-2 hover:text-blue-400 transition">Features</a>
+            <a href="#pnl" class="block px-6 py-2 hover:text-blue-400 transition">PnL</a>
+            <a href="#multibagger" class="block px-6 py-2 hover:text-blue-400 transition">Multibagger</a>
+            <a href="#testimonials" class="block px-6 py-2 hover:text-blue-400 transition">Testimonials</a>
+            <a href="#pricing" class="block px-6 py-2 hover:text-blue-400 transition">Pricing</a>
+            <button onclick="window.location.href='/login'"
                 class="w-full text-left bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded transition transform hover:scale-105">
                 Login
-        </button>
-    </div>
-</nav>
+            </button>
+        </div>
+    </nav>
 
-<script>
-    // Toggle mobile menu
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    mobileMenuBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
-    });
-</script>
+    <script>
+        // Toggle mobile menu
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
 
 
     <!-- Hero Section -->
@@ -492,18 +492,43 @@
         </div>
     </div>
 
-   <!-- Footer -->
-<footer class="bg-gray-800 py-6">
-    <div class="container mx-auto px-6 text-center text-gray-500">
-        <p>© 2025 SignalX. All Rights Reserved.</p>
-        <p class="mt-2">
-            Contact us on WhatsApp: 
-            <a href="https://wa.me/919643536701" target="_blank" class="text-blue-400 hover:text-blue-300">
-                +919643536701
-            </a>
-        </p>
+    <!-- Footer -->
+    <footer class="bg-gray-800 py-6">
+        <div class="container mx-auto px-6 text-center text-gray-500">
+            <p>© 2025 SignalX. All Rights Reserved.</p>
+            <p class="mt-2">
+                Contact us on WhatsApp:
+                <a href="https://wa.me/919643536701" target="_blank" class="text-blue-400 hover:text-blue-300">
+                    +919643536701
+                </a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Demo Credentials Modal -->
+
+    <div id="demoModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+        <div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6">
+            <h2 class="text-2xl font-bold mb-4 text-center text-blue-800">Your Demo Credentials</h2>
+            <div class="mb-4 text-center">
+                <span class="block font-bold text-gray-800">Username:</span>
+                <span id="modalDemoUser" class="font-mono text-xl text-gray-900"></span>
+            </div>
+            <div class="mb-4 text-center">
+                <span class="block font-bold text-gray-800">Password:</span>
+                <span id="modalDemoPassword" class="font-mono text-xl text-gray-900"></span>
+            </div>
+            <div class="mt-4 flex space-x-4">
+                <button id="loginDemoButton" class="w-1/2 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-full">
+                  Login
+                </button>
+                <button id="closeDemoModal" class="w-1/2 bg-gray-600 hover:bg-gray-700 text-white py-2 rounded-full">
+                  Close
+                </button>
+              </div>
+        </div>
     </div>
-</footer>
+
 
 
     <script>
@@ -539,16 +564,47 @@
             modal.classList.add('hidden');
         });
 
-        // Form submission with SweetAlert2 and API call
+        // Ensure the DOM is fully loaded before attaching event listeners
+        document.addEventListener("DOMContentLoaded", function () {
+            // Close demo modal
+            const closeDemoModalBtn = document.getElementById('closeDemoModal');
+            const demoModal = document.getElementById('demoModal');
+            closeDemoModalBtn.addEventListener('click', () => {
+                demoModal.classList.add('hidden');
+            });
+
+            // Login demo button: redirect to login page
+            const loginDemoButton = document.getElementById('loginDemoButton');
+            loginDemoButton.addEventListener('click', () => {
+                window.location.href = '/login'; // Adjust the URL as needed
+            });
+        });
+
+        // Function to show demo credentials modal (assumes you have a modal with IDs "modalDemoUser" and "modalDemoPassword")
+        function showDemoCredentials(user, pass) {
+            document.getElementById('modalDemoUser').textContent = user;
+            document.getElementById('modalDemoPassword').textContent = pass;
+            // Show the demo credentials modal (assumes it starts hidden)
+            document.getElementById('demoModal').classList.remove('hidden');
+        }
+
+        // Form submission with SweetAlert2 loader and API call
         form.addEventListener('submit', (e) => {
             e.preventDefault();
             const number = document.getElementById('whatsAppNumber').value;
             if (number.length === 10 && /^\d+$/.test(number)) {
+                // Show loading spinner using SweetAlert2
+                Swal.fire({
+                    title: 'Processing...',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
                 fetch('/api/whatsapp-leads/', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ number: number })
                 })
                     .then(response => {
@@ -560,18 +616,25 @@
                         return response.json();
                     })
                     .then(data => {
+                        // Close the loading spinner
+                        Swal.close();
+                        // Show success message
                         Swal.fire({
                             title: 'Success!',
-                            text: 'Your 1-day free trial is activated. Login credentials will be sent to your WhatsApp soon.',
+                            text: 'Your 1-day free trial is activated. Demo credentials are below.',
                             icon: 'success',
-                            confirmButtonText: 'OK',
+                            confirmButtonText: 'View Credentials',
                             customClass: { confirmButton: 'bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full' }
                         }).then(() => {
-                            modal.classList.add('hidden');
+                            // Display the demo credentials modal with the returned data
+                            showDemoCredentials(data.demo_user, data.demo_password);
+                            // Optionally hide the WhatsApp modal and reset the form
+                            document.getElementById('whatsAppModal').classList.add('hidden');
                             form.reset();
                         });
                     })
                     .catch(error => {
+                        Swal.close();
                         Swal.fire({
                             title: 'Error',
                             text: error.message,
