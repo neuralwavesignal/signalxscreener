@@ -1,4 +1,10 @@
 from django.db import models
+from django.utils import timezone
+from datetime import timedelta
+from django.contrib.auth.models import User
+
+def default_end_date():
+    return timezone.now() + timedelta(days=3)
 
 class Stock(models.Model):
     SCREENER_CHOICES = (
@@ -23,6 +29,8 @@ class Stock(models.Model):
 class WhatsAppLead(models.Model):
     number = models.CharField(max_length=10, unique=True, help_text="10-digit Indian WhatsApp number")
     created_at = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    end_date = models.DateTimeField(default=default_end_date, null=True)
 
     def __str__(self):
-        return self.number
+        return f"{self.number} - {self.created_at.strftime('%Y-%m-%d %H:%M:%S')}"

@@ -31,7 +31,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'screeners'
+    'screeners',
 ]
 
 MIDDLEWARE = [
@@ -146,3 +146,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 INSTALLED_APPS += ['corsheaders']
 MIDDLEWARE.insert(1, "corsheaders.middleware.CorsMiddleware")
 CORS_ALLOW_ALL_ORIGINS = True
+

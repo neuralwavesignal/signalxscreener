@@ -77,40 +77,46 @@ def generate_random_credentials():
 @csrf_exempt
 @require_http_methods(["POST"])
 def create_whatsapp_lead(request):
-    with transaction.atomic():
-        try:
-            data = json.loads(request.body)
-        except json.JSONDecodeError:
-            return JsonResponse({"error": "Invalid JSON"}, status=400)
-        
-        number = data.get("number")
-        if not number:
-            return JsonResponse({"error": "Number field is required"}, status=400)
-        if not number.isdigit() or len(number) != 10:
-            return JsonResponse({"error": "Invalid number. Must be a 10-digit Indian WhatsApp number."}, status=400)
-        
-        if WhatsAppLead.objects.filter(number=number).exists():
-            return JsonResponse({"error": "This number already exists."}, status=400)
-        
-        try:
-            lead = WhatsAppLead.objects.create(number=number)
-        except Exception as e:
-            return JsonResponse({"error": str(e)}, status=500)
-        
-        # Generate the demo user credentials
-        demo_user, demo_password , demo_email = generate_random_credentials()
+    try:
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        return JsonResponse({"error": "Invalid JSON"}, status=400)
+    
+    number = data.get("number")
+    if not number:
+        return JsonResponse({"error": "Number field is required"}, status=400)
+    if not number.isdigit() or len(number) != 10:
+        return JsonResponse({"error": "Invalid number. Must be a 10-digit Indian WhatsApp number."}, status=400)
+    
+    if WhatsAppLead.objects.filter(number=number).exists():
+        return JsonResponse({"error": "This number already exists."}, status=400)
+    
+    try:
+        lead = WhatsAppLead.objects.create(number=number)
+        lead.save()
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+    
+    # Generate the demo user credentials
+    demo_user, demo_password , demo_email = generate_random_credentials()
 
-        # Create a demo user in the Django auth system
-        try:
-            new_user = User.objects.create_user(username=demo_user, password=demo_password, email=demo_email)
-            new_user.save()
-        except Exception as e:
-            return JsonResponse({"error": "Error creating demo user" + str(e)}, status=500)
-        
-        return JsonResponse({
-            "id": lead.id,
-            "number": lead.number,
-            "created_at": lead.created_at.isoformat(),
-            "demo_user":demo_user,
-            "demo_password":demo_password
-        }, status=201)
+    # Create a demo user in the Django auth system
+    try:
+        new_user = User.objects.create_user(username=demo_user, password=demo_password, email=demo_email)
+        new_user.save()
+
+        # Associate the new demo user with the lead record
+        lead.user = new_user
+        lead.save()
+
+        print("lead ", lead)
+    except Exception as e:
+        return JsonResponse({"error": "Error creating demo user" + str(e)}, status=500)
+    
+    return JsonResponse({
+        "id": lead.id,
+        "number": lead.number,
+        "created_at": lead.created_at.isoformat(),
+        "demo_user":demo_user,
+        "demo_password":demo_password
+    }, status=201)
