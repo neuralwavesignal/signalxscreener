@@ -17,6 +17,8 @@ from .models import WhatsAppLead
 import random, string
 from django.contrib.auth.models import User
 from django.db import transaction
+import requests
+
 
 
 def login_view(request):
@@ -112,6 +114,19 @@ def create_whatsapp_lead(request):
         print("lead ", lead)
     except Exception as e:
         return JsonResponse({"error": "Error creating demo user" + str(e)}, status=500)
+    
+    WEBHOOK_URL = "https://hook.eu2.make.com/5ijq5xczjmtjz7omuo4tkfiini9oxsjm"
+    try:
+        webhook_payload = {
+            "name": name,
+            "number": "91"+number
+        }
+        webhook_response = requests.post(WEBHOOK_URL, json=webhook_payload, timeout=5)
+        print("we ", webhook_response.text)
+        webhook_response.raise_for_status()
+    except requests.RequestException as e:
+        # Log but do not block lead creation if webhook fails
+        print("Webhook error:", e)
     
     return JsonResponse({
         "id": lead.id,
