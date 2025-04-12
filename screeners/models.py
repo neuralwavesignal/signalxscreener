@@ -27,6 +27,7 @@ class Stock(models.Model):
 
 
 class WhatsAppLead(models.Model):
+    name = models.CharField(max_length=255, null=True, blank=True)
     number = models.CharField(max_length=10, unique=True, help_text="10-digit Indian WhatsApp number")
     created_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)

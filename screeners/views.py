@@ -19,7 +19,6 @@ from django.contrib.auth.models import User
 from django.db import transaction
 
 
-
 def login_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -83,6 +82,7 @@ def create_whatsapp_lead(request):
         return JsonResponse({"error": "Invalid JSON"}, status=400)
     
     number = data.get("number")
+    name = data.get("name")
     if not number:
         return JsonResponse({"error": "Number field is required"}, status=400)
     if not number.isdigit() or len(number) != 10:
@@ -92,7 +92,7 @@ def create_whatsapp_lead(request):
         return JsonResponse({"error": "This number already exists."}, status=400)
     
     try:
-        lead = WhatsAppLead.objects.create(number=number)
+        lead = WhatsAppLead.objects.create(number=number, name=name)
         lead.save()
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
