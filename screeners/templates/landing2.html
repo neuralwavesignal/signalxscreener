@@ -1272,7 +1272,9 @@
                 })
                     .then(response => response.json())
                     .then(data => {
+                        fbq('track', 'CompleteRegistration');
                         console.log('Success:', data);
+                        
                     })
                     .catch(error => {
                         console.error('Error:', error);
