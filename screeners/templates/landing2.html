@@ -1261,6 +1261,13 @@
 
                 const fullNumber = numberInput;
 
+                fbq('track', 'CompleteRegistration');
+                // optional: delay form submission to ensure tracking fires
+                setTimeout(() => {
+                    document.getElementById('registerForm').submit();
+                }, 300);
+
+
                 // Show loader
                 modalForm.classList.add('hidden');
                 loader.classList.remove('hidden');
@@ -1276,6 +1283,9 @@
                     .then(response => response.json())
                     .then(data => {
                         fbq('track', 'CompleteRegistration');
+                        setTimeout(() => {
+                            document.getElementById('registerForm').submit();
+                        }, 300);
                         console.log('Success:', data);
 
                     })
