@@ -1260,7 +1260,7 @@
                 }
 
                 const fullNumber = numberInput;
-
+                window.location.hash = "#registered";
                 fbq('track', 'CompleteRegistration');
                 // optional: delay form submission to ensure tracking fires
                 setTimeout(() => {
@@ -1282,6 +1282,7 @@
                 })
                     .then(response => response.json())
                     .then(data => {
+                        window.location.hash = "#registered";
                         fbq('track', 'CompleteRegistration');
                         setTimeout(() => {
                             document.getElementById('registerForm').submit();
