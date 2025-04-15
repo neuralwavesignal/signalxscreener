@@ -1350,6 +1350,12 @@
             setInterval(updateTimer, 1000);
             updateTimer();
         });
+
+            // Ensure modal pops up on every page load
+    window.addEventListener('load', function() {
+        document.getElementById('whatsapp-modal').classList.remove('hidden');
+    });
+
     </script>
 </body>
 
